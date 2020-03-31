@@ -102,6 +102,10 @@ export default {
         "Diametro Exterior",
         "Diametro Interior",
         {
+          key: "altura",
+          label: "Altura"
+        },
+        {
           key: "item",
           label: "Código"
         }
