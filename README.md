@@ -1,4 +1,4 @@
-# wb
+# filtros
 
 ## Project setup
 ```
@@ -19,4 +19,6 @@ npm run build
 ```
 npm run lint
 ```
-# filtros
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
