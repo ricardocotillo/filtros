@@ -12,6 +12,8 @@
     "bootstrap-vue": "^2.11.0",
     "core-js": "^3.6.4",
     "firebase": "^7.14.0",
+    "lodash": "^4.17.15",
+    "pdfjs-dist": "^2.3.200",
     "register-service-worker": "^1.7.1",
     "vue": "^2.6.11",
     "vue-firestore": "^0.3.30",
