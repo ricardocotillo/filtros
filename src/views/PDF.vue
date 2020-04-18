@@ -1,50 +1,68 @@
 <template>
-  <b-container>
-    <b-row>
-      <b-col>
-        <PDFPage class="page" :page="pageLeft" :scale="scale" v-if="!loading" />
-      </b-col>
-      <b-col>
-        <PDFPage
-          class="page"
-          :page="pageRight"
-          :scale="scale"
-          v-if="!loading"
-        />
-      </b-col>
-    </b-row>
-  </b-container>
+  <section class="pdfViewer" fluid>
+    <div id="flipbook" v-if="!loading">
+      <div class="hard">{{loading}}</div>
+      <div v-for="page in pages" :key="page.pageNumber">
+        <PDFPage class="page" :page="page" :scale="scale" />
+      </div>
+    </div>
+  </section>
 </template>
 
 <script>
-// import range from 'lodash/range'
+import $ from 'jquery'
+import 'vue-turn/src/lib/turn'
 import PDFPage from '../components/PDFPage'
 export default {
   data() {
     return {
-      url: 'http://filtroswillybusch.com.pe/catalogo/doc.pdf',
+      url: '/doc.pdf',
       scale: 1,
       pdf: null,
-      pageLeft: null,
-      pageRight: null,
       pageNumber: 1,
       loading: true,
+      translateX: 'translateX(-25%)',
+      pages: [],
     }
   },
   methods: {
-    async getPage(pageNumber) {
-      this.pageLeft = await this.pdf.getPage(pageNumber)
-      this.pageRight = await this.pdf.getPage(pageNumber + 1)
+    async getPages(pageNumber, numPages) {
+      for (let i = 1; i <= numPages; i++) {
+        const page = await this.pdf.getPage(i)
+        this.pages.push(page)
+      }
+    },
+
+    flipBook() {
+      const viewport = this.pages[0].getViewport({ scale: this.scale })
+      const book = $('#flipbook')
+      this.width = viewport.width
+      book.turn({
+        width: viewport.width * 2,
+        height: viewport.height,
+        autoCenter: true,
+      })
+      book.bind('turned', (e, page) => {
+        console.log(page)
+      })
     },
   },
   mounted() {
-    import('pdfjs-dist/webpack').then((pdfjs) => {
-      const loadingTask = pdfjs.getDocument(this.url)
-      loadingTask.promise.then((pdf) => {
-        this.pdf = pdf
-        this.getPage(this.pageNumber).then(() => (this.loading = false))
+    import('pdfjs-dist/webpack')
+      .then((pdfjs) => {
+        const loadingTask = pdfjs.getDocument(this.url)
+        return loadingTask.promise
       })
-    })
+      .then((pdf) => {
+        this.pdf = pdf
+        return this.getPages(this.pageNumber, pdf.numPages)
+      })
+      .then(() => {
+        // this.loading = false
+        this.$nextTick(() => {
+          this.flipBook()
+        })
+      })
   },
   components: {
     PDFPage,
@@ -53,14 +71,21 @@ export default {
 </script>
 
 <style scoped>
-footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 60px;
-  background-color: #f5f5f5;
-}
 .page {
   border: black 1px solid;
+}
+.pdfViewer {
+  background: #383434;
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  align-items: center;
+  overflow: hidden;
+}
+.hard {
+  background: white;
 }
 </style>

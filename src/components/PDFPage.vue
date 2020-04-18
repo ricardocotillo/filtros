@@ -6,7 +6,6 @@ export default {
   props: ['page', 'scale'],
   mounted() {
     const viewport = this.page.getViewport({ scale: this.scale })
-
     // Prepare canvas using PDF page dimensions
     const canvas = document.getElementById(`pdfpage${this.page.pageNumber}`)
     const context = canvas.getContext('2d')
