@@ -1,16 +1,14 @@
 <template>
-  <canvas :id="`pdfpage${page.pageNumber}`"></canvas>
+  <canvas></canvas>
 </template>
 <script>
 export default {
   props: ['page', 'scale'],
   mounted() {
     const viewport = this.page.getViewport({ scale: this.scale })
-    // Prepare canvas using PDF page dimensions
-    const canvas = document.getElementById(`pdfpage${this.page.pageNumber}`)
-    const context = canvas.getContext('2d')
-    canvas.height = viewport.height
-    canvas.width = viewport.width
+    const context = this.$el.getContext('2d')
+    this.$el.height = viewport.height
+    this.$el.width = viewport.width
 
     const renderContext = {
       canvasContext: context,
@@ -19,8 +17,8 @@ export default {
 
     const renderTask = this.page.render(renderContext)
 
-    renderTask.promise.then(function() {
-      console.log('Page rendered')
+    renderTask.promise.then(() => {
+      this.$emit('rendered')
     })
   },
 }
