@@ -1,6 +1,7 @@
 <template>
   <section class="pdfViewer">
     <SearchModal @search="search" :results="searchedResults" />
+    <!-- :totalPages="this.pdf.numPages" -->
     <ToolBar
       v-if="!loading"
       id="toolbar"
@@ -11,7 +12,7 @@
       @last="last"
       @changePage="changePage"
       :pageNumber="page"
-      :totalPages="this.pdf.numPages"
+      :totalPages="30"
       v-model.number="page"
       @input="changePage"
     />
@@ -133,7 +134,7 @@ export default {
       }
     },
     async getPages(pageNumber, numPages) {
-      numPages = 6;
+      numPages = 30;
       for (let i = 1; i <= numPages; i++) {
         const page = await this.pdf.getPage(i);
         this.pages.push(page);

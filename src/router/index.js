@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+// import Home from '../views/Home.vue'
+import Catalogo from '../views/PDF.vue'
 
 Vue.use(VueRouter)
 
@@ -8,13 +9,13 @@ Vue.use(VueRouter)
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: Catalogo
     },
-    {
-      path: '/catalogo',
-      name: 'Catalogo',
-      component: () => import(/* webpackChunkName: "catalogo" */ '../views/PDF.vue')
-    }
+    // {
+    //   path: '/catalogo',
+    //   name: 'catalogo',
+    //   component: () => import(/* webpackChunkName: "catalogo" */ '../views/PDF.vue')
+    // }
   ]
 
 const router = new VueRouter({
