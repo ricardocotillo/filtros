@@ -44,7 +44,7 @@
       icon="fast-forward"
       size="lg"
     />
-    <font-awesome-icon @click="search" class="icon" icon="search" size="lg" />
+    <font-awesome-icon v-b-modal.search-modal class="icon" icon="search" size="lg" />
   </div>
 </template>
 
