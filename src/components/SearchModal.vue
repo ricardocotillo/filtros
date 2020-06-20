@@ -9,7 +9,7 @@
       </b-input-group-append>
     </b-input-group>
     <br />
-    <p v-if="results.length > 0">Página(s) {{results.length}}</p>
+    <p v-if="results && results.length > 0">Página(s) {{results.length}}</p>
     <ul>
       <li v-for="r in results" :key="r.key">
         <span style="font-weight: bold;">Página {{r.page}}</span>
