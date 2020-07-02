@@ -1,5 +1,5 @@
 <template>
-  <b-modal id="search-modal" size="sm" centered title="Buscar" hide-footer>
+  <b-modal id="search-modal" size="md" centered title="Buscar" hide-footer>
     <b-input-group>
       <b-form-input v-model="text"></b-form-input>
       <b-input-group-append>
@@ -11,8 +11,8 @@
     <br />
     <p v-if="results && results.length > 0">Página(s) {{results.length}}</p>
     <ul>
-      <li v-for="r in results" :key="r.key">
-        <span style="font-weight: bold;">Página {{r.page}}</span>
+      <li class="result-item" @click="goto(r.id)" v-for="r in results" :key="r.id">
+        <span style="font-weight: bold;">Página {{r.id}}</span>
         <br />
         <span>{{r.text}}</span>
       </li>
@@ -31,6 +31,10 @@ export default {
     };
   },
   methods: {
+    goto(page) {
+      this.$bvModal.hide("search-modal");
+      this.$emit("goto", page);
+    },
     onSearch() {
       this.$emit("search", this.text);
     }
@@ -44,9 +48,14 @@ ul {
   padding-left: 0;
   overflow: scroll;
   max-height: 400px;
+  max-width: 700px;
 }
 li {
   border-bottom: solid 1px lightgray;
+}
+
+li:hover {
+  cursor: pointer;
 }
 
 .modal {

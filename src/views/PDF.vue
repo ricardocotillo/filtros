@@ -45,6 +45,8 @@
       class="w-25 mb-2"
       v-if="loading"
     ></b-progress>
+    <h1>Hola mundo</h1>
+      <font-awesome-icon icon="arrows-alt" :style="{color: 'white'}" size="3x" />
   </section>
 </template>
 

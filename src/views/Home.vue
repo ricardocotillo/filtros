@@ -1,6 +1,13 @@
 <template>
   <div class="home">
-    <img src="../assets/logo.png">
+    <b-container>
+      <b-row align-h="center">
+        <b-col md="6" class="catalogo-btn-warpper">
+          <b-btn @click="goToCatalogo">ir a modo catálogo</b-btn>
+        </b-col>
+      </b-row>
+    </b-container>
+    <img src="../assets/logo.png" />
     <b-container>
       <b-row align-h="center">
         <b-col md="8">
@@ -23,23 +30,33 @@
 
 <script>
 // @ is an alias to /src
-import Aplicacion from '@/components/Aplicacion'
-import Equivalencia from '@/components/Equivalencia'
-import Dimensiones from '@/components/Dimensiones'
+import Aplicacion from "@/components/Aplicacion";
+import Equivalencia from "@/components/Equivalencia";
+import Dimensiones from "@/components/Dimensiones";
 
 export default {
-  name: 'home',
+  name: "home",
+  methods: {
+    goToCatalogo() {
+      this.$router.push("catalogo");
+    }
+  },
   components: {
     Aplicacion,
     Equivalencia,
     Dimensiones
   }
-}
+};
 </script>
 
 <style>
 .home {
   margin-top: 60px;
+}
+.catalogo-btn-warpper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
 

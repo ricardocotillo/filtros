@@ -1,6 +1,6 @@
 <template>
   <section class="imageViewer">
-    <SearchModal />
+    <SearchModal @search="search" :results="results" @goto="goto" />
     <!-- :totalPages="this.pdf.numPages" -->
     <ToolBar
       v-if="!loading"
@@ -12,7 +12,7 @@
       @last="last"
       @changePage="changePage"
       :pageNumber="page"
-      :totalPages="225"
+      :totalPages="405"
       v-model.number="page"
       @input="changePage"
     />
@@ -24,13 +24,10 @@
       :style="{ transform: `translate(${x}px, ${y}px)` }"
     >
       <div id="flipbook" v-show="!loading">
-        <div class="hard portada">
-          <img src="@/assets/logo.png" alt />
-        </div>
-        <div v-for="i in 244" :key="i" :style="{background: 'white'}">
+        <div v-for="i in 405" :key="i" :style="{background: 'white'}" :class="{hard: i === 0}">
           <img
             class="page-image"
-            :src="`/doc/doc_page-${(i+1).toString().padStart(4, '0')}.jpg`"
+            :src="`http://filtroswillybusch.com.pe/aplicativo/pdf/doc_page-${(i).toString().padStart(4, '0')}.jpg`"
             alt
           />
         </div>
@@ -47,6 +44,7 @@ import SearchModal from "../components/SearchModal";
 export default {
   data() {
     return {
+      results: [],
       loading: true,
       x: 0,
       y: 0,
@@ -85,12 +83,30 @@ export default {
     },
     changePage() {
       this.book.turn("page", this.page);
+    },
+    goto(page) {
+      this.book.turn("page", page);
+    },
+    search(text) {
+      fetch(`http://filtroswillybusch.com.pe/aplicativo/api/pdf/search?search=${text}`)
+        .then(res => res.json())
+        .then(data => (this.results = data.pages));
     }
   },
   mounted() {
     this.loading = false;
     this.book = $("#flipbook");
-    this.book.turn({ width: 1240, height: 877 });
+    const deviceWidth = window.innerWidth;
+    if (deviceWidth <= 900) {
+      this.book.turn({
+        width: deviceWidth,
+        height: deviceWidth * 1.413376309,
+        display: "single",
+        autoCenter: true
+      });
+    } else {
+      this.book.turn({ width: 1240, height: 877 });
+    }
     this.book.bind("turned", (e, page) => {
       this.page = page;
     });

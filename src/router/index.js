@@ -1,8 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import Home from '../views/Home.vue'
+import Home from '../views/Home.vue'
 // import Catalogo from '../views/PDF.vue'
-import ImageViewer from '../views/ImageViewer.vue'
 
 Vue.use(VueRouter)
 
@@ -10,13 +9,13 @@ const routes = [
   {
     path: '/',
     name: 'home',
-    component: ImageViewer,
+    component: Home,
   },
-  // {
-  //   path: '/catalogo',
-  //   name: 'catalogo',
-  //   component: () => import(/* webpackChunkName: "catalogo" */ '../views/PDF.vue')
-  // }
+  {
+    path: '/catalogo',
+    name: 'catalogo',
+    component: () => import(/* webpackChunkName: "catalogo" */ '../views/ImageViewer.vue')
+  }
 ]
 
 const router = new VueRouter({
