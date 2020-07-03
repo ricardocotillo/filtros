@@ -72,7 +72,7 @@ export default {
       this.book.turn("zoom", zoomed ? 1.5 : 1);
     },
     first() {
-      this.book.turn("page", 2);
+      this.book.turn("page", 1);
     },
     previous() {
       this.book.turn("previous");
@@ -81,7 +81,7 @@ export default {
       this.book.turn("next");
     },
     last() {
-      this.book.turn("page", 7);
+      this.book.turn("page", 405);
     },
     changePage() {
       this.book.turn("page", this.page);
