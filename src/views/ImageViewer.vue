@@ -23,6 +23,8 @@
       id="imageviewer-wrapper"
       :style="{ transform: `translate(${x}px, ${y}px)` }"
     >
+    <br>
+    <br>
       <div id="flipbook" v-show="!loading">
         <div v-for="i in 405" :key="i" :style="{background: 'white'}" :class="{hard: i === 0}">
           <img
@@ -97,7 +99,7 @@ export default {
     this.loading = false;
     this.book = $("#flipbook");
     const deviceWidth = window.innerWidth;
-    if (deviceWidth <= 900) {
+    if (deviceWidth <= 1100 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
       this.book.turn({
         width: deviceWidth,
         height: deviceWidth * 1.413376309,
