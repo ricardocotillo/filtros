@@ -27,7 +27,7 @@
         <div v-for="i in 405" :key="i" :style="{background: 'white'}" :class="{hard: i === 0}">
           <img
             class="page-image"
-            :src="`http://filtroswillybusch.com.pe/aplicativo/pdf/doc_page-${(i).toString().padStart(4, '0')}.jpg`"
+            :src="`https://filtroswillybusch.com.pe/aplicativo/pdf/doc_page-${(i).toString().padStart(4, '0')}.jpg`"
             alt
           />
         </div>
@@ -88,7 +88,7 @@ export default {
       this.book.turn("page", page);
     },
     search(text) {
-      fetch(`http://filtroswillybusch.com.pe/aplicativo/api/pdf/search?search=${text}`)
+      fetch(`https://filtroswillybusch.com.pe/aplicativo/api/pdf/search?search=${text}`)
         .then(res => res.json())
         .then(data => (this.results = data.pages));
     }
