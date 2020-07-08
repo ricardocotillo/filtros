@@ -17,10 +17,10 @@
 	<b-row>
 		<b-col md="12">
 			<b-table responsive :fields="fields" :items="equivalencia" v-if="equivalencia.length > 0">
-				<template slot="marca" slot-scope="data">
+				<template v-slot:cell(marca)="data">
 					{{data.value.toUpperCase()}}
 				</template>
-				<template slot="equivalencia" slot-scope="data">
+				<template v-slot:cell(equivalencia)="data">
 					<a class="hover" @click="mostrarFiltro(data.value)">{{ data.value }}</a>
 				</template>
 			</b-table>
@@ -150,6 +150,7 @@ export default {
 			}
 		},
 		mostrarFiltro (codigo) {
+      console.log('hola')
       this.imagen = ''
       this.aplicaciones = ''
       this.filtro = []

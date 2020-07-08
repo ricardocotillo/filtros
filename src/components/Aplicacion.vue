@@ -35,25 +35,25 @@
     <b-row align-h="center">
       <b-col md="12">
         <b-table responsive striped hover :items="filtros" :fields="fields" v-if="filtros.length > 0">
-          <template slot="aire" slot-scope="data">
+          <template v-slot:cell(aire)="data">
             <template class="hover" v-for="(item, index) in items(data.value)">
               <a class="hover" @click="mostrarFiltro(item)" v-if="index < items(data.value).length - 1" :key="item">{{ item + "/" }}</a>
               <a class="hover" @click="mostrarFiltro(item)" v-else :key="`${item}-else`">{{ item }}</a>
             </template>
           </template>
-          <template slot="aceite" slot-scope="data">
+          <template v-slot:cell(aceite)="data">
             <template v-for="(item, index) in items(data.value)">
               <a class="hover" @click="mostrarFiltro(item)" v-if="index < items(data.value).length - 1" :key="item">{{ item + "/" }}</a>
               <a class="hover" @click="mostrarFiltro(item)" v-else :key="`${item}-else`">{{ item }}</a>
             </template>
           </template>
-          <template slot="combustible" slot-scope="data">
+          <template v-slot:cell(combustible)="data">
             <template v-for="(item, index) in items(data.value)">
               <a class="hover" @click="mostrarFiltro(item)" v-if="index < items(data.value).length - 1" :key="item">{{ item + "/" }}</a>
               <a class="hover" @click="mostrarFiltro(item)" v-else :key="`${item}-else`">{{ item }}</a>
             </template>
           </template>
-          <template slot="otros" slot-scope="data">
+          <template v-slot:cell(otros)="data">
             <template v-for="(item, index) in items(data.value)">
               <a class="hover" @click="mostrarFiltro(item)" v-if="index < items(data.value).length - 1" :key="item">{{ item + "/" }}</a>
               <a class="hover" @click="mostrarFiltro(item)" v-else :key="`${item}-else`">{{ item }}</a>

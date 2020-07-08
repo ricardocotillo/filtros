@@ -49,7 +49,7 @@
           :fields="fields"
           v-if="filtros.length > 0"
         >
-          <template slot="item" slot-scope="data">
+          <template v-slot:cell(item)="data">
             <a class="hover" @click="mostrarFiltro(data.value)">{{ data.value }}</a>
           </template>
         </b-table>
