@@ -11,7 +11,7 @@
     <br />
     <p v-if="results && results.length > 0">Página(s) {{results.length}}</p>
     <ul>
-      <li class="result-item" @click="goto(r.id)" v-for="r in results" :key="r.id">
+      <li class="result-item" @click="goto(r.id)" v-for="r in results" :key="r.code">
         <span style="font-weight: bold;">Página {{r.id}}</span>
         <br />
         <span>{{r.text}}</span>
@@ -23,7 +23,8 @@
 <script>
 export default {
   props: {
-    results: Array
+    results: Array,
+    loading: Boolean,
   },
   data() {
     return {

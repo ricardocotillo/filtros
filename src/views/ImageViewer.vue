@@ -23,8 +23,8 @@
       id="imageviewer-wrapper"
       :style="{ transform: `translate(${x}px, ${y}px)` }"
     >
-    <br>
-    <br>
+      <br />
+      <br />
       <div id="flipbook" v-show="!loading">
         <div v-for="i in 405" :key="i" :style="{background: 'white'}" :class="{hard: i === 0}">
           <img
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import { db } from "../firebase";
 import $ from "jquery";
 import "vue-turn/src/lib/turn";
 import ToolBar from "../components/ToolBar";
@@ -46,11 +47,30 @@ import SearchModal from "../components/SearchModal";
 export default {
   data() {
     return {
+      inciales: [
+        "HH",
+        "BPE",
+        "AE",
+        "BLE",
+        "BAE",
+        "BPS",
+        "HFA",
+        "BPES",
+        "BHE",
+        "HFF",
+        "HFL",
+        "HS",
+        "HWP",
+        "BLS",
+        "HFAR",
+        "HFH"
+      ],
       results: [],
       loading: true,
       x: 0,
       y: 0,
-      page: 1
+      page: 1,
+      searchLoading: false
     };
   },
   methods: {
@@ -90,16 +110,67 @@ export default {
       this.book.turn("page", page);
     },
     search(text) {
-      fetch(`https://filtroswillybusch.com.pe/aplicativo/api/pdf/search?search=${text}`)
-        .then(res => res.json())
-        .then(data => (this.results = data.pages));
+      this.searchLoading = true
+      let search = "";
+      if (text.split("-").length > 1) {
+        search = text.split("-").join("");
+      } else {
+        search = text;
+      }
+      db.collection("codigos")
+        .where("item", ">=", search.toUpperCase())
+        .where(
+          "item",
+          "<=",
+          (
+            search.substring(0, search.length - 1) +
+            String.fromCharCode(search.charCodeAt(search.length - 1) + 1)
+          ).toUpperCase()
+        )
+        .get()
+        .then(docs => {
+          if (!docs.empty) {
+            docs.forEach(doc => {
+              fetch(
+                `https://filtroswillybusch.com.pe/aplicativo/api/pdf/search?code=${
+                  doc.data()["item"]
+                }`
+              )
+                .then(res => res.json())
+                .then(data => {
+                  data.pages.forEach(p =>
+                    this.results.push({
+                      id: p.id,
+                      code: doc.data()["item"] + doc.data()["tipo"] + p.id.toString(),
+                      text: `${doc.data()["item"]} tipo: ${doc.data()["tipo"]}`
+                    })
+                  );
+                  this.searchLoading = false
+                }).catch(() => this.searchLoading = false);
+            });
+          } else {
+            fetch(
+              `https://filtroswillybusch.com.pe/aplicativo/api/pdf/search?search=${text}`
+            )
+              .then(res => res.json())
+              .then(data => {
+                this.results = data.pages
+                this.searchLoading = false
+              }).catch(() => this.searchLoading = false);
+          }
+        }).catch(() => this.searchLoading = false);
     }
   },
   mounted() {
     this.loading = false;
     this.book = $("#flipbook");
     const deviceWidth = window.innerWidth;
-    if (deviceWidth <= 1100 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    if (
+      deviceWidth <= 1100 ||
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
       this.book.turn({
         width: deviceWidth,
         height: deviceWidth * 1.413376309,
