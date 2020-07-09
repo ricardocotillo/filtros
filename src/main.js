@@ -4,10 +4,10 @@ import router from './router'
 import VueFirestore from 'vue-firestore'
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faSearchPlus, faSearch, faFastForward, faFastBackward, faArrowLeft, faArrowRight, faSearchMinus, faArrowsAlt } from '@fortawesome/free-solid-svg-icons'
+import { faSearchPlus, faSearch, faFastForward, faFastBackward, faArrowLeft, faArrowRight, faSearchMinus, faArrowsAlt, faSpinner } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
-library.add(faSearchPlus, faSearch, faFastForward, faFastBackward, faArrowLeft, faArrowRight, faSearchMinus, faArrowsAlt)
+library.add(faSearchPlus, faSearch, faFastForward, faFastBackward, faArrowLeft, faArrowRight, faSearchMinus, faArrowsAlt, faSpinner)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 

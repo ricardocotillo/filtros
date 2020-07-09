@@ -1,6 +1,6 @@
 <template>
   <section class="imageViewer">
-    <SearchModal @search="search" :results="results" @goto="goto" />
+    <SearchModal :loading="searchLoading" @search="search" :results="results" @goto="goto" />
     <!-- :totalPages="this.pdf.numPages" -->
     <ToolBar
       v-if="!loading"

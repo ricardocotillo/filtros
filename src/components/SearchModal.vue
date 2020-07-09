@@ -9,6 +9,7 @@
       </b-input-group-append>
     </b-input-group>
     <br />
+    <font-awesome-icon v-if="loading" icon="spinner" spin />
     <p v-if="results && results.length > 0">Página(s) {{results.length}}</p>
     <ul>
       <li class="result-item" @click="goto(r.id)" v-for="r in results" :key="r.code">
