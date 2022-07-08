@@ -17,10 +17,10 @@
 	<b-row>
 		<b-col md="12">
 			<b-table responsive :fields="fields" :items="equivalencia" v-if="equivalencia.length > 0">
-				<template slot="marca" slot-scope="data">
+				<template #cell(marca)="data">
 					{{data.value.toUpperCase()}}
 				</template>
-				<template slot="equivalencia" slot-scope="data">
+				<template #cell(equivalencia)="data">
 					<a class="hover" @click="mostrarFiltro(data.value)">{{ data.value }}</a>
 				</template>
 			</b-table>
@@ -164,6 +164,8 @@ export default {
             this.aplicaciones = doc.data().aplicaciones
             this.filtro.push(doc.data())
             this.$refs.modal2.show()
+          } else {
+            console.log({'error': 'Codigo no existe en el folder de codigos'})
           }
         })
     }
