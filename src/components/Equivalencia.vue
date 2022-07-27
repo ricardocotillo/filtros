@@ -164,8 +164,6 @@ export default {
             this.aplicaciones = doc.data().aplicaciones
             this.filtro.push(doc.data())
             this.$refs.modal2.show()
-          } else {
-            console.log({'error': 'Codigo no existe en el folder de codigos'})
           }
         })
     }
