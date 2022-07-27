@@ -31,7 +31,7 @@
       <b-container fluid>
         <b-row align-h="center">
           <b-col md="6">
-            <img class="imagen" :src="imagen" alt="">
+            <img v-if="imagen" class="imagen" :src="imagen" alt="imagen de producto" style="max-width: 100%" />
           </b-col>
           <b-col md="6">
             <b-table class="tabla" stacked striped hover :items="filtro" :fields="campos" v-if="filtro.length > 0"></b-table>
@@ -160,7 +160,7 @@ export default {
               .then(url => {
                 this.imagen = url
               })
-            this.imagen = doc.data().imagen
+            this.imagen = null
             this.aplicaciones = doc.data().aplicaciones
             this.filtro.push(doc.data())
             this.$refs.modal2.show()
